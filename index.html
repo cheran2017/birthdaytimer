@@ -72,7 +72,12 @@ function printOutput() {
 }
 function timer() {
 	if (slug ==1) {
-		setInterval(getDetails(), 1000); 
+		setInterval(function(){
+			var current_date = new Date();
+			var dob = new Date(document.getElementById("dob").value);
+			seconds  = secondsDifference(current_date,dob);
+		  	document.getElementById('seconds').innerHTML = seconds;
+		}, 1000); 
 	}
 }
 
