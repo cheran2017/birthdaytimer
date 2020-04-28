@@ -20,7 +20,7 @@
 </div>
 
 <script type="text/javascript">
-var slug = 0; var years; var months; var days; var hours; var mins ;var seconds;
+var slug = 0; var years=0; var months=0; var days=0; var hours=0; var mins=0 ;var seconds=0;
 var day = 1000 * 60 * 60 * 24;
 function dateDifference(date1,date2) {
 	return Math.floor(date1.getTime()-date2.getTime());
@@ -45,6 +45,10 @@ function secondsDifference(date1,date2) {
 }
 
 function getDetails() {
+	if (document.getElementById("dob").value =='') {
+		alert('Please select  date');
+		return false;
+	}
 	var current_date = new Date();
 	var dob = new Date(document.getElementById("dob").value);
     days 	 = daysDifference(current_date,dob);
