@@ -4,40 +4,65 @@
 	<title>Birthday Timer</title>
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
-<body class="text-center">
+<body class="text-center mt-5">
 <input type="date" name="dob" id="dob">
 <button type="button" class="btn btn-primary" onclick="getDetails()">age details</button>
-<div id="output"></div>
+<div class="container mt-5">
+	<ul class="list-group">
+	  <li class="list-group-item active">You Born from now</li>
+	  <li class="list-group-item"> Year 	: <span id="year"></span></li>
+	  <li class="list-group-item"> Months   : <span id="month"></span></li>
+	  <li class="list-group-item"> Day 		: <span id="day"></span></li>
+	  <li class="list-group-item"> Hours 	: <span id="hours"></span></li>
+	  <li class="list-group-item"> Minitues : <span id="minitues"></span></li>
+	  <li class="list-group-item"> Seconds  : <span id="seconds"></span></li>
+	</ul>
+</div>
 
 <script type="text/javascript">
-var slug = 0; var years; var months; var days; var hours; var seconds;
+var slug = 0; var years; var months; var days; var hours; var mins ;var seconds;
+var day = 1000 * 60 * 60 * 24;
+function dateDifference(date1,date2) {
+	return Math.floor(date1.getTime()-date2.getTime());
+}
+function daysDifference(date1,date2) {
+	return Math.floor(dateDifference(date1,date2)/day);
+}
+function monthDifference(date1,date2) {
+	return Math.floor(days/31);
+}
+function yearDifference(date1,date2) {
+	return Math.floor(monthDifference(date1,date2)/12);
+}
+function hourDifference(date1,date2) {
+	return Math.floor(dateDifference(date1,date2) / (1000 * 3600));
+}
+function minituesDifference(date1,date2) {
+	return Math.floor((date1 - date2 + 19800000) / (60000));
+}
+function secondsDifference(date1,date2) {
+	return Math.floor((date1 - date2 + 19800000) / 1000);
+}
+
 function getDetails() {
-	var dob = document.getElementById("dob").value;
-	var millisecondsBetweenDOBAnd1970 = Date.parse(dob);
-	var millisecondsBetweenNowAnd1970 = Date.now();
-	var ageInMilliseconds = millisecondsBetweenNowAnd1970-millisecondsBetweenDOBAnd1970;
-	var milliseconds = ageInMilliseconds;
-	var second = 1000;
-	var minute = second*60;
-	var hour = minute*60;
-	var day = hour*24;
-	var month = day*30; 
-	var year = day*365;
-	 years = Math.round(milliseconds/year);
-	 months = years*12;
-	 days = years*365;
-	 hours = Math.round(milliseconds/hour);
-	 seconds = Math.round(milliseconds/second);
-	 printOutput()
+	var current_date = new Date();
+	var dob = new Date(document.getElementById("dob").value);
+    days 	 = daysDifference(current_date,dob);
+    months 	 = monthDifference(current_date,dob);
+    years 	 = yearDifference(current_date,dob);
+    hours    = hourDifference(current_date,dob); 
+    mins 	 = minituesDifference(current_date,dob);
+    seconds  = secondsDifference(current_date,dob);
+	printOutput()
 }
 
 function printOutput() {
-	var output = "Your Age in Years : "+years+
-     "</br>Your Age in Months : "+months+
-       "</br>Your Age in Days : "+days+
-      "</br>Your Age in Hours : "+hours+
-      "</br>Your Age in Seconds : "+seconds;
-  	document.getElementById('output').innerHTML = output;
+  	document.getElementById('year').innerHTML = years;
+  	document.getElementById('month').innerHTML = months;
+  	document.getElementById('day').innerHTML = days;
+  	document.getElementById('hours').innerHTML = hours;
+  	document.getElementById('minitues').innerHTML = mins;
+  	document.getElementById('seconds').innerHTML = seconds;
   	slug = 1;
   	timer();
 }
