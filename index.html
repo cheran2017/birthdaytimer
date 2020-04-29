@@ -43,21 +43,40 @@ function minituesDifference(date1,date2) {
 function secondsDifference(date1,date2) {
 	return Math.floor((date1 - date2 + 19800000) / 1000);
 }
-
-function getDetails() {
-	if (document.getElementById("dob").value =='') {
-		alert('Please select  date');
+function dateValation(date) {
+	var current_date = new Date();
+	if(current_date < date)
+	{
+	    alert(" The given date is Future Date");
 		return false;
+	} else {
+		return true;
 	}
+}
+function getDetails() {
 	var current_date = new Date();
 	var dob = new Date(document.getElementById("dob").value);
-    days 	 = daysDifference(current_date,dob);
-    months 	 = monthDifference(current_date,dob);
-    years 	 = yearDifference(current_date,dob);
-    hours    = hourDifference(current_date,dob); 
-    mins 	 = minituesDifference(current_date,dob);
-    seconds  = secondsDifference(current_date,dob);
-	printOutput()
+	document.getElementById('year').innerHTML = '';
+  	document.getElementById('month').innerHTML = '';
+  	document.getElementById('day').innerHTML = '';
+  	document.getElementById('hours').innerHTML = '';
+  	document.getElementById('minitues').innerHTML = '';
+  	document.getElementById('seconds').innerHTML = '';
+	if (document.getElementById("dob").value =='') {
+		alert('Please select  date');
+		
+		return false;
+	}
+	
+	if (dateValation(dob)) {
+	    days 	 = daysDifference(current_date,dob);
+	    months 	 = monthDifference(current_date,dob);
+	    years 	 = yearDifference(current_date,dob);
+	    hours    = hourDifference(current_date,dob); 
+	    mins 	 = minituesDifference(current_date,dob);
+	    seconds  = secondsDifference(current_date,dob);
+		printOutput()
+	}
 }
 
 function printOutput() {
@@ -75,6 +94,11 @@ function timer() {
 		setInterval(function(){
 			var current_date = new Date();
 			var dob = new Date(document.getElementById("dob").value);
+			days 	 = daysDifference(current_date,dob);
+		    months 	 = monthDifference(current_date,dob);
+		    years 	 = yearDifference(current_date,dob);
+		    hours    = hourDifference(current_date,dob); 
+		    mins 	 = minituesDifference(current_date,dob);
 			seconds  = secondsDifference(current_date,dob);
 		  	document.getElementById('seconds').innerHTML = seconds;
 		}, 1000); 
